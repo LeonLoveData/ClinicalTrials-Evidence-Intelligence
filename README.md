@@ -60,7 +60,7 @@ ClinicalTrials-Evidence-Intelligence
 │ ├── processed
 │ └── external
 │
-├── pipeline
+├── src
 │ ├── data_ingestion.py
 │ ├── evidence_extraction.py
 │ └── analysis_pipeline.py
