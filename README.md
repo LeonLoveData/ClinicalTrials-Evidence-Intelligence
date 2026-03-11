@@ -52,7 +52,7 @@ The platform is designed as a **prototype for biomedical evidence intelligence**
 ---
 
 # Repository Structure
-···
+```
 ClinicalTrials-Evidence-Intelligence
 │
 ├── data
@@ -75,7 +75,7 @@ ClinicalTrials-Evidence-Intelligence
 │
 ├── requirements.txt
 └── README.md
-···
+```
 
 
 This structure separates **data ingestion, evidence extraction, and analysis**, allowing each component to evolve independently.
