@@ -1,53 +1,37 @@
 # ClinicalTrials Evidence Intelligence
 
-AI-assisted platform for **clinical trial evidence discovery, analysis, and insight generation**.
+An AI-assisted analytics pipeline for **clinical trial discovery, evidence search, and research insight generation** using public ClinicalTrials.gov data.
 
-This project demonstrates how modern data engineering and LLM-assisted workflows can transform raw clinical trial information into structured evidence that supports **research, regulatory, and strategic decision-making** in life sciences organizations.
+This project demonstrates how modern data science and natural language embedding models can support **clinical research intelligence workflows**, including:
 
-The system integrates **clinical trial data retrieval, evidence extraction, and analytical summarization** into a reproducible pipeline.
+- Clinical trial trend analysis
+- Semantic search across trial descriptions
+- Machine learning–based study inclusion screening
+- Evidence gap identification
 
----
-
-# Overview
-
-Clinical trial data is often distributed across multiple sources and requires substantial manual effort to review and synthesize.
-
-This project simulates how a research or information science team could build an **evidence intelligence workflow** to:
-
-- Retrieve clinical trial metadata  
-- Extract structured signals from study descriptions  
-- Identify patterns across trials  
-- Generate research-ready summaries  
-
-The platform is designed as a **prototype for biomedical evidence intelligence**, similar to workflows used by medical affairs, regulatory intelligence, or research information teams.
+The system integrates **data analysis, semantic search, and predictive modeling** into a reproducible Python pipeline.
 
 ---
 
-# Key Capabilities
+# Project Overview
 
-## Clinical Trial Discovery
+Clinical research teams often need to analyze large collections of clinical trials to identify:
 
-- Query clinical trial datasets  
-- Retrieve study metadata  
-- Filter trials by condition, intervention, or phase  
+- emerging therapeutic areas
+- relevant studies for systematic reviews
+- evidence gaps in clinical research
+- trends in clinical trial activity
 
-## Evidence Extraction
+This project simulates a **research intelligence workflow** using structured ClinicalTrials.gov data.
 
-- Extract key research signals from study descriptions  
-- Identify intervention types and study endpoints  
-- Normalize study metadata for downstream analysis  
+The pipeline performs four main analyses:
 
-## AI-Assisted Evidence Analysis
+1. Clinical trial trend analysis
+2. Semantic trial search using embeddings
+3. Machine learning–based inclusion prediction
+4. Evidence gap detection
 
-- Summarize clinical trial objectives and outcomes  
-- Identify emerging research trends  
-- Generate decision-ready insights from trial evidence  
-
-## Reproducible Data Pipeline
-
-- Structured ingestion and transformation workflow  
-- Modular processing scripts  
-- Export of analysis-ready datasets  
+All analyses automatically generate figures for interpretation.
 
 ---
 
@@ -56,128 +40,193 @@ The platform is designed as a **prototype for biomedical evidence intelligence**
 ClinicalTrials-Evidence-Intelligence
 │
 ├── data
-│ ├── raw
-│ ├── processed
-│ └── external
+│ └── raw
+│ └── clinicaltrials_real_data.csv
 │
-├── src
-│ ├── data_ingestion.py
-│ ├── evidence_extraction.py
-│ └── analysis_pipeline.py
+├── figures
+│ ├── trial_count_trend.png
+│ ├── embedding_search_example.png
+│ ├── inclusion_model_performance.png
+│ └── evidence_gap_summary.png
 │
-├── notebooks
-│ ├── exploratory_analysis.ipynb
-│ └── trial_pattern_analysis.ipynb
-│
-├── outputs
-│ ├── evidence_tables
-│ └── summary_reports
-│
-├── requirements.txt
+├── clinical_trials_evidence_pipeline.py
 └── README.md
 ```
 
+---
 
-This structure separates **data ingestion, evidence extraction, and analysis**, allowing each component to evolve independently.
+# Data Source
+
+The project uses a structured dataset derived from **ClinicalTrials.gov public trial records**.
+
+Example fields include:
+
+- `nct_id`
+- `conditions`
+- `interventions`
+- `study_type`
+- `enrollment`
+- `primary_outcomes`
+- `start_date`
+
+These variables enable both **structured analytics and semantic search across trial metadata**.
 
 ---
 
-# Data Sources
+# Analytical Pipeline
 
-The project uses publicly available clinical trial datasets, primarily derived from:
+The pipeline performs four analytical modules.
 
-- ClinicalTrials.gov public datasets  
-- Structured clinical trial metadata exports  
+## 1. Clinical Trial Trend Analysis
 
-These datasets contain information such as:
+The system extracts trial **start years** from ClinicalTrials.gov data and calculates the number of trials initiated each year.
 
-- Study design  
-- Disease conditions  
-- Interventions  
-- Sponsors  
-- Study phases  
-- Outcome descriptions  
+Output:
 
----
 
-# Analytical Workflow
+figures/trial_count_trend.png
 
-The system follows a simplified **evidence intelligence pipeline**:
 
-## 1. Data Ingestion
-
-Clinical trial datasets are downloaded and standardized.
-
-## 2. Data Processing
-
-Study records are cleaned and normalized into structured tables.
-
-## 3. Evidence Extraction
-
-Key information is extracted from trial descriptions and metadata.
-
-## 4. Evidence Analysis
-
-The processed data is analyzed to identify patterns such as:
-
-- Frequently studied interventions  
-- Emerging therapeutic areas  
-- Trial design characteristics  
-
-## 5. Insight Generation
-
-The system produces structured outputs that support further research or strategic analysis.
+This visualization highlights **changes in research activity over time**.
 
 ---
 
-# Example Insights
+## 2. Semantic Trial Search (Embedding-Based)
 
-The platform can support analyses such as:
+Trial conditions and interventions are combined into a searchable text field.
 
-- Distribution of clinical trials by therapeutic area  
-- Trends in intervention types across studies  
-- Identification of high-activity research domains  
-- Summary views of clinical development landscapes  
+A sentence embedding model is used:
 
-These outputs illustrate how structured clinical evidence can support **research planning and competitive intelligence**.
+
+sentence-transformers/all-MiniLM-L6-v2
+
+
+The pipeline performs **semantic similarity search** between a query and trial records.
+
+Example query used in the script:
+
+
+diagnostic accuracy device trials in heart failure
+
+
+Top matching trials are returned and visualized.
+
+Output:
+
+
+figures/embedding_search_example.png
+
+
+This demonstrates how **embedding search can support clinical evidence discovery**.
+
+---
+
+## 3. Study Inclusion Prediction Model
+
+A simple machine learning model simulates **automated screening of clinical trials**.
+
+Pseudo-labels are generated using three criteria:
+
+- Enrollment size
+- Presence of primary outcomes
+- Study type (interventional vs observational)
+
+Features used:
+
+
+enrollment
+has_primary
+is_interventional
+
+
+Model:
+
+
+Logistic Regression
+
+
+Performance is visualized using a **confusion matrix**.
+
+Output:
+
+
+figures/inclusion_model_performance.png
+
+
+This module demonstrates how machine learning can assist **systematic review study selection**.
+
+---
+
+## 4. Evidence Gap Analysis
+
+The pipeline analyzes **median enrollment sizes across clinical conditions**.
+
+Conditions with the **lowest median enrollment** may indicate potential evidence gaps or under-studied areas.
+
+Output:
+
+
+figures/evidence_gap_summary.png
+
+
+This analysis highlights **therapeutic areas where additional research may be needed**.
+
+---
+
+# Example Outputs
+
+The pipeline automatically generates four visual outputs:
+```
+| Analysis | Output Figure |
+|---|---|
+| Trial Trend Analysis | `trial_count_trend.png` |
+| Semantic Search Results | `embedding_search_example.png` |
+| Inclusion Model Performance | `inclusion_model_performance.png` |
+| Evidence Gap Analysis | `evidence_gap_summary.png` |
+```
+All outputs are saved to:
+
+
+/figures
+
 
 ---
 
 # Technology Stack
 
-- Python  
-- Pandas  
-- Jupyter Notebook  
-- LLM-assisted text analysis  
-- Clinical trial open datasets  
+Python
 
-The architecture emphasizes **clarity and reproducibility rather than heavy infrastructure**, making it easy to extend for additional datasets or research questions.
+Core libraries:
 
----
+- pandas
+- numpy
+- matplotlib
+- scikit-learn
+- sentence-transformers
 
-# Potential Extensions
+Machine learning components:
 
-Future improvements could include:
-
-- Integration with biomedical literature databases  
-- Retrieval-augmented generation for evidence synthesis  
-- Interactive dashboards for clinical intelligence  
-- Automated monitoring of newly registered clinical trials  
+- Logistic Regression
+- StandardScaler
+- Sentence embeddings for semantic search
 
 ---
 
-# Use Cases
+##Example Research Questions Supported
 
-This project illustrates workflows relevant to teams such as:
+This pipeline can support questions such as:
+- How has clinical trial activity changed over time?
+- Which trials are most relevant to a specific research topic?
+- Can machine learning help prioritize trials for systematic review?
+- Which disease areas may have limited clinical evidence?
 
-- Research information science  
-- Medical affairs  
-- Regulatory intelligence  
-- Clinical strategy  
-- Competitive intelligence  
+##Purpose of This Project
 
----
+This project demonstrates how AI-assisted analytics and semantic search can support biomedical research intelligence workflows.
 
-# About This Project
-
-This repository was created as a **practical exploration of AI-assisted biomedical evidence workflows**, demonstrating how modern data tools can accelerate the transformation of raw clinical research data into usable insights.
+The goal is to illustrate practical applications of:
+- clinical trial data analysis
+- semantic evidence retrieval
+- machine learning–assisted research screening
+- evidence gap identification
+within a reproducible data science pipeline.
