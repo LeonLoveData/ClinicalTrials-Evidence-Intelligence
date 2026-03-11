@@ -1,5 +1,11 @@
+from data_ingestion import load_data, DATA_PATH, FIG_DIR
+from evidence_extraction import (
+    trial_trend,
+    TrialEmbeddingSearch,
+    train_inclusion_model,
+    evidence_gap
+)
 import matplotlib.pyplot as plt
-from data_process import FIG_DIR
 
 def plot_trial_trend(trend_df):
     plt.figure(figsize=(7, 4))
@@ -41,3 +47,25 @@ def plot_evidence_gap(gap_df):
     plt.tight_layout()
     plt.savefig(f"{FIG_DIR}/evidence_gap_summary.png")
     plt.close()
+
+def main():
+    df = load_data(DATA_PATH)
+
+    trend_df = trial_trend(df)
+    plot_trial_trend(trend_df)
+
+    search_engine = TrialEmbeddingSearch(df)
+    query = "diagnostic accuracy device trials in heart failure"
+    results = search_engine.search(query, top_k=5)
+    plot_embedding_search(results)
+
+    model, scaler, cm, report = train_inclusion_model(df)
+    plot_inclusion_confusion_matrix(cm)
+
+    gap_df = evidence_gap(df)
+    plot_evidence_gap(gap_df)
+
+    print("Analysis complete. Figures saved.")
+
+if __name__ == "__main__":
+    main()
